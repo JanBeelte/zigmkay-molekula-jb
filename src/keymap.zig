@@ -37,10 +37,10 @@ pub const SCRNSHT = _GCS(us.N4);
 
 pub const keymap = [_][key_count]core.KeyDef{
     .{
-                 T(us.Q),   T(us.W),   T(us.F),   SFT(us.P),       T(us.B),                     T(us.J),   T(us.L),   T(us.U),    T(us.Y),   T(us.SEMICOLON),
-    T(us.TAB), SFT(us.A), CTL(us.R), ALT(us.S),   GUI(us.T), GuiH(us.G, us.T),                  T(us.M), GUI(us.N), ALT(us.E),  CTL(us.I), SFT(us.O),  T(us.QUOT),
-                 T(us.Z),   T(us.X),   T(us.C),     T(us.D),       T(us.V),                     T(us.K),   T(us.H), T(us.COMMA), LT(L_WIN, us.DOT), T(us.SLASH),
-                                           _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
+               T(us.Q),  AF(us.W), GUI(us.E),   T(us.R), T(us.T),                  T(us.Y),   T(us.U), GUI(us.I),   T(us.O), T(us.P),
+    T(us.TAB), T(us.A), ALT(us.S), CTL(us.D), SFT(us.F), T(us.G),                  T(us.H), SFT(us.J), CTL(us.K), ALT(us.L), T(us.SEMICOLON), T(us.QUOT),
+               T(us.Z),   T(us.X),   T(us.C),   T(us.V), T(us.B),                  T(us.N),  T(us.M), T(us.COMMA), LT(L_WIN, us.DOT), T(us.SLASH),
+                              _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
     },
     // L_ARROWS - WIP (SEMICOLON & PLUS & TILD up for debate)
     .{
@@ -54,7 +54,7 @@ pub const keymap = [_][key_count]core.KeyDef{
                      GUI(us.ESC), T(SCRNSHT) ,T(us.PERC),  SFT(us.CART),  T(us.GRAVE),              T(us.MINUS),       T(us.N7),   T(us.N8),  T(us.N9),   T(us.PLUS),
         _______, AF(us.BACKSPACE), CTL(UNDO), ALT(REDO) ,  GUI(us.ENTER), T(us.TAB),                T(us.UNDERLINE), GUI(us.N4), ALT(us.N5),CTL(us.N6), SFT(us.EQUAL), _______,
                  _______,  T(_Gui(us.X)), T(_Gui(us.C)),   T(us.DEL), T(_Gui(us.V)),                 T(de.EUR),        T(us.N1),   T(us.N2),  T(us.N3),     _______,
-                                                 _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
+                                                 _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.N0), _______
     },
     // L_EMPTY
     .{
