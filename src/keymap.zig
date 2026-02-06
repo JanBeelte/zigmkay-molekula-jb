@@ -7,8 +7,9 @@ const core = zmk.zigmkay.core;
 const NONE = core.KeyDef.none;
 const _______ = NONE;
 const us = zmk.keycodes.us;
+const de = zmk.keycodes.de;
 
-pub const key_count = 30;
+pub const key_count = 38;
 
 // zig fmt: off
 //core.KeyDef.transparent;
@@ -24,70 +25,60 @@ const L_LEFT = L_NUM;
 const L_RIGHT = L_ARROWS;
 
 pub const sides = [key_count]core.Side{
-  .L,.L,.L,.L,.L,       .R,.R,.R,.R,.R,
-  .L,.L,.L,.L,.L,       .R,.R,.R,.R,.R,
-     .L,.L,.L,.L,       .R,.R,.R,.R,
-              .X,       .X
+    .L,.L,.L,.L,.L,       .R,.R,.R,.R,.R,
+ .L,.L,.L,.L,.L,.L,       .R,.R,.R,.R,.R,.R,
+    .L,.L,.L,.L,.L,       .R,.R,.R,.R,.R,
+            .X,.X,.X,    .X,.X,.X
 };
+
+
+
+pub const SCRNSHT = _GCS(us.N4);
+
 pub const keymap = [_][key_count]core.KeyDef{
     .{
-         T(us.Q),  AF(us.W), GUI(us.E),   T(us.R), T(us.T),                  T(us.Y),   T(us.U),  GUI(us.I),       T(us.O), T(us.P),
-         T(us.A), ALT(us.S), CTL(us.D),         SFT(us.F), T(us.G),                  T(us.H), SFT(us.J),   CTL(us.K),     ALT(us.L),    T(us.SEMICOLON),
-                    T(us.X),   T(us.C),         T(us.V), T(us.B),                  T(us.N),  T(us.M), T(us.COMMA), LT(L_WIN, us.DOT),
-                                             LT(L_LEFT, us.ENTER),                  LT(L_RIGHT, us.SPACE)
+                 T(us.Q),   T(us.W),   T(us.F),   SFT(us.P),       T(us.B),                     T(us.J),   T(us.L),   T(us.U),    T(us.Y),   T(us.SEMICOLON),
+    T(us.TAB), SFT(us.A), CTL(us.R), ALT(us.S),   GUI(us.T), GuiH(us.G, us.T),                  T(us.M), GUI(us.N), ALT(us.E),  CTL(us.I), SFT(us.O),  T(us.QUOT),
+                 T(us.Z),   T(us.X),   T(us.C),     T(us.D),       T(us.V),                     T(us.K),   T(us.H), T(us.COMMA), LT(L_WIN, us.DOT), T(us.SLASH),
+                                           _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
     },
-    // L_ARROWS
+    // L_ARROWS - WIP (SEMICOLON & PLUS & TILD up for debate)
     .{
-   T(us.EXLM),    T(us.LABK),    GUI(us.EQL),          T(us.RABK), T(us.PERC),             T(us.SLSH),  T(us.HOME),   AF(us.UP),    T(us.END),  T(us.APP),
-    T(us.AT), ALT(us.LCBR), CTL(us.LPRN),   SFT(us.RPRN), T(us.RCBR),             T(us.PGUP), AF(us.LEFT), AF(us.DOWN), AF(us.RIGHT), T(us.PGDN),
-                  T(us.HASH),   T(us.LBRC),  T(us.RBRC),    _______,                _______,   T(us.TAB),  CTL(us.DQUO),      T(us.ESC),
-                                                        LT(L_LEFT, us.SPACE),                _______
+              GUI(us.LBRC),   T(us.RBRC),   T(us.LCBR),   SFT(us.RCBR), T(us.HASH),              T(us.AT),  T(us.HOME),   AF(us.UP),    T(us.END),  T(us.PLUS),
+      _______,SFT(us.LABK), CTL(us.RABK), ALT(us.LPRN),   GUI(us.RPRN), T(us.SLASH),             T(us.PGUP), AF(us.LEFT), AF(us.DOWN), AF(us.RIGHT), SFT(us.PGDN),_______,
+                   _______,   T(us.TILD),   T(us.AMPR),    T(us.ASTER), T(us.BACKSLASH),         T(us.DLR),  GUI(us.SEMICOLON), ALT(us.QUOT), CTL(us.GRAVE),_______,
+                                                  _______, LT(L_LEFT, us.SPACE), T(us.ENTER),  T(us.ENTER), _______, _______
     },
     // L_NUM
     .{
-       _______,  _______,    T(us.LBRC),  T(us.RBRC), _______,                  _______,   T(us.N7),  T(us.N8),  T(us.N9),    _______,
-       _______,     UNDO,          REDO, T(us.SPACE), _______,                _______, SFT(us.N4),CTL(us.N5),ALT(us.N6), _______,
-               T(us.ESC), T(_Ctl(us.C)),   T(us.DEL), _______,              PrintStats,   T(us.N1),  T(us.N2),  T(us.N3),
-                                          LT(L_LEFT, us.SPACE),             LT(L_RIGHT, us.N0)
+                     GUI(us.ESC), T(SCRNSHT) ,T(us.PERC),  SFT(us.CART),  T(us.GRAVE),              T(us.MINUS),       T(us.N7),   T(us.N8),  T(us.N9),   T(us.PLUS),
+        _______, AF(us.BACKSPACE), CTL(UNDO), ALT(REDO) ,  GUI(us.ENTER), T(us.TAB),                T(us.UNDERLINE), GUI(us.N4), ALT(us.N5),CTL(us.N6), SFT(us.EQUAL), _______,
+                 _______,  T(_Gui(us.X)), T(_Gui(us.C)),   T(us.DEL), T(_Gui(us.V)),                 T(de.EUR),        T(us.N1),   T(us.N2),  T(us.N3),     _______,
+                                                 _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
     },
     // L_EMPTY
     .{
-            _______, _______, _______, _______, _______,                _______, _______, _______, _______, _______,
-            _______, _______, _______, _______, _______,                _______, _______, _______, _______, _______,
-                     _______, _______, _______, _______,                _______, _______, _______, _______,
-                                             LT(L_LEFT, us.ENTER),                  LT(L_RIGHT, us.SPACE)
+                  _______, _______, _______, _______, _______,                _______, _______, _______, _______, _______,
+        _______,  _______, _______, _______, _______, _______,                _______, _______, _______, _______, _______, _______,
+                  _______, _______, _______, _______, _______,                _______, _______, _______, _______,_______,
+                          _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
 
     },
-    // BOTH
+    // BOTH - WIP (BACKSPACE & ESC & TAB & GRAVE & CART up for debate, do we want SCRNSHT without shift?)
     .{
-    PrintStats,   T(us.F7),   T(us.F8),   T(us.F9), T(us.F10),            T(us.TILD), T(us.SPACE), T(us.SPACE), T(us.SPACE), T(us.GRV),
-    _______, ALT(us.F4), CTL(us.F5), SFT(us.F6), T(us.F11),             T(us.DLR),  SFT(us.BS),  CTL(us.BS),  ALT(us.BS),   _______,
-               T(us.F1),   T(us.F2),   T(us.F3), T(us.F12),            T(us.CART),   T(us.DEL),   T(us.DEL),   T(us.DEL),
-                                                   _______,              T(us.N0)
-    },
-    .{
-    WinNav(us.N7), _______, WinNav(us.N1), WinNav(us.N6), _______,             _______, _______, _______, _______, _______,
-    WinNav(us.N4), _______, WinNav(us.N2), WinNav(us.N5), _______,             _______, _______, _______, _______, _______,
-                   _______, WinNav(us.N3), WinNav(us.N8), _______,             _______, _______, _______, _______,
-                                                          _______,             _______
-   },
-    // GAMING
-    .{
-           NONE,    NONE,    NONE,    NONE,    NONE,                   NONE,       NONE,   T(us.UP),        NONE,    NONE,
-           NONE, T(us.A), T(us.S), T(us.T),    NONE,                   NONE, T(us.LEFT), T(us.DOWN), T(us.RIGHT),    NONE,
-           NONE,    NONE,    NONE,    NONE,                            NONE,       NONE,       NONE,        T(us.ESCAPE),
-                                        T(us.SPACE),                  NONE
+                    GUI(us.ESC),     T(us.F7),   T(us.F8), SFT(us.F9), T(us.F10),             T(_Gui(us.GRAVE)), SFT(us.SPACE), T(us.SPACE), T(us.SPACE), T(us.TAB),
+        _______, AF(us.BACKSPACE), CTL(us.F4), ALT(us.F5), GUI(us.F6), T(us.F11),             T(de.SRPS),        GUI(us.BS),  ALT(us.BS),  CTL(us.BS),   SFT(us.ESC),_______,
+                      _______,       T(us.F1),   T(us.F2),   T(us.F3), T(us.F12),             T(us.CART),          T(us.DEL),   T(us.DEL),   T(us.DEL),      _______,
+                                                        _______, _______, T(us.ENTER),    T(us.ENTER), _______, _______
     },
 };
-
-
 
 // zig fmt: on
 const LEFT_THUMB = 1;
 const RIGHT_THUMB = 2;
 
-const UNDO = T(_Ctl(us.Z));
-const REDO = T(_Ctl(us.Y));
+const UNDO = _Gui(us.Z);
+const REDO: core.KeyCodeFire = .{ .tap_keycode = us.KC_Z, .tap_modifiers = .{ .left_shift = true, .left_gui = true } };
 
 fn _Ctl(fire: core.KeyCodeFire) core.KeyCodeFire {
     var copy = fire;
@@ -95,6 +86,26 @@ fn _Ctl(fire: core.KeyCodeFire) core.KeyCodeFire {
         mods.left_ctrl = true;
     } else {
         copy.tap_modifiers = .{ .left_ctrl = true };
+    }
+    return copy;
+}
+
+fn _Gui(fire: core.KeyCodeFire) core.KeyCodeFire {
+    var copy = fire;
+    if (copy.tap_modifiers) |mods| {
+        mods.left_gui = true;
+    } else {
+        copy.tap_modifiers = .{ .left_gui = true };
+    }
+    return copy;
+}
+
+fn _Alt(fire: core.KeyCodeFire) core.KeyCodeFire {
+    var copy = fire;
+    if (copy.tap_modifiers) |mods| {
+        mods.left_alt = true;
+    } else {
+        copy.tap_modifiers = .{ .left_alt = true };
     }
     return copy;
 }
@@ -108,6 +119,19 @@ fn _Sft(fire: core.KeyCodeFire) core.KeyCodeFire {
     }
     return copy;
 }
+
+fn _GCS(fire: core.KeyCodeFire) core.KeyCodeFire {
+    var copy = fire;
+    if (copy.tap_modifiers) |mods| {
+        mods.left_gui = true;
+        mods.left_ctrl = true;
+        mods.left_shift = true;
+    } else {
+        copy.tap_modifiers = .{ .left_gui = true, .left_ctrl = true, .left_shift = true };
+    }
+    return copy;
+}
+
 fn C(key_press: core.KeyCodeFire, custom_hold: u8) core.KeyDef {
     return core.KeyDef{
         .tap_hold = .{
@@ -120,31 +144,45 @@ fn C(key_press: core.KeyCodeFire, custom_hold: u8) core.KeyDef {
 
 pub const dimensions = core.KeymapDimensions{ .key_count = key_count, .layer_count = keymap.len };
 const PrintStats = core.KeyDef{ .tap_only = .{ .key_press = .{ .tap_keycode = us.KC_PRINT_STATS } } };
-const tapping_term = core.TimeSpan{ .ms = 250 };
+const tapping_term = core.TimeSpan{ .ms = 200 };
 const combo_timeout = core.TimeSpan{ .ms = 40 };
 
 pub const combos = [_]core.Combo2Def{
-    Combo_Tap(.{ 1, 2 }, L_BASE, us.J),
-    Combo_Tap_HoldMod(.{ 11, 12 }, L_BASE, us.Z, .{ .right_ctrl = true, .right_alt = true }),
+    // Combo_Tap(.{ 1, 2 }, L_BASE, de.SRPS),
+    Combo_Tap(.{ 25, 26 }, L_BASE, us.COLON),
+    Combo_Tap(.{ 25, 26 }, L_ARROWS, us.COLON),
+    Combo_Tap(.{ 26, 27 }, L_BASE, us.DQUO),
+    Combo_Tap(.{ 26, 27 }, L_ARROWS, us.DQUO),
+    Combo_Tap_HoldMod(.{ 20, 21 }, L_BASE, us.Z, .{ .right_ctrl = true }),
+    Combo_Tap_HoldMod(.{ 1, 2 }, L_BASE, us.Z, .{ .right_ctrl = true }),
 
-    Combo_Tap_HoldMod(.{ 12, 13 }, L_BASE, us.V, .{ .left_ctrl = true, .left_shift = true }),
-    Combo_Tap_HoldMod(.{ 12, 13 }, L_NUM, _Ctl(us.V), .{ .left_ctrl = true, .left_shift = true }),
-    Combo_Tap_HoldMod(.{ 11, 12 }, L_NUM, _Ctl(us.X), .{ .left_ctrl = true, .left_shift = true }),
-    Combo_Tap_HoldMod(.{ 12, 13 }, L_ARROWS, us.AMPR, .{ .left_ctrl = true, .left_shift = true }),
+    // Dots for DE Umlaute:
+    Combo_Tap(.{ 22, 23 }, L_BASE, _Alt(us.U)),
+    Combo_Tap(.{ 24, 25 }, L_BASE, _Alt(us.U)),
+
+    // Combo_Tap_HoldMod(.{ 12, 13 }, L_BASE, us.V, .{ .left_ctrl = true, .left_shift = true }),
+    // Combo_Tap_HoldMod(.{ 12, 13 }, L_NUM, _Ctl(us.V), .{ .left_ctrl = true, .left_shift = true }),
+    // Combo_Tap_HoldMod(.{ 11, 12 }, L_NUM, _Ctl(us.X), .{ .left_ctrl = true, .left_shift = true }),
+    // Combo_Tap_HoldMod(.{ 12, 13 }, L_ARROWS, us.AMPR, .{ .left_ctrl = true, .left_shift = true }),
 
     Combo_Tap(.{ 13, 16 }, L_BOTH, core.KeyCodeFire{ .tap_keycode = us.KC_F4, .tap_modifiers = .{ .left_alt = true } }),
 
     Combo_Tap(.{ 23, 24 }, L_BASE, us.BOOT),
     Combo_Tap(.{ 0, 4 }, L_BASE, us.BOOT),
-    Combo_Tap(.{ 5, 9 }, L_BASE, us.BOOT),
+    Combo_Tap(.{ 5, 4 }, L_BASE, us.BOOT),
+    // Combo_Tap(.{ 6, 7 }, L_BASE, de.AE),
+    // Combo_Tap(.{ 6, 8 }, L_BASE, de.OE),
+    // Combo_Tap(.{ 7, 8 }, L_BASE, de.UE),
 
     Combo_Tap(.{ 7, 8 }, L_ARROWS, us.QUES),
+    Combo_Tap(.{ 7, 8 }, L_NUM, us.QUES),
     Combo_Tap(.{ 7, 8 }, L_BOTH, us.QUES),
 
     Combo_Tap(.{ 1, 2 }, L_ARROWS, us.EXLM),
+    Combo_Tap(.{ 1, 2 }, L_NUM, us.EXLM),
     Combo_Tap(.{ 1, 2 }, L_BOTH, us.EXLM),
 
-    Combo_Tap_HoldMod(.{ 17, 18 }, L_BASE, us.MINS, .{ .left_ctrl = true, .left_alt = true }),
+    // Combo_Tap_HoldMod(.{ 17, 18 }, L_BASE, us.MINS, .{ .left_ctrl = true, .left_alt = true }),
     Combo_Tap(.{ 17, 18 }, L_ARROWS, us.PLUS),
     Combo_Tap(.{ 16, 17 }, L_ARROWS, us.PIPE),
 
@@ -224,7 +262,17 @@ fn GUI(keycode_fire: core.KeyCodeFire) core.KeyDef {
         .tap_hold = .{
             .tap = .{ .key_press = keycode_fire },
             .hold = core.HoldDef{ .hold_modifiers = .{ .left_gui = true } },
-            .tapping_term = .{ .ms = 750 },
+            .tapping_term = tapping_term,
+        },
+    };
+}
+
+fn GuiH(keycode_fire: core.KeyCodeFire, keycode_hold: core.KeyCodeFire) core.KeyDef {
+    return core.KeyDef{
+        .tap_hold = .{
+            .tap = .{ .key_press = keycode_fire },
+            .hold = core.HoldDef{ .hold_modifiers = .{ .left_gui = true }, .custom = keycode_hold.tap_keycode },
+            .tapping_term = tapping_term,
         },
     };
 }
@@ -262,8 +310,11 @@ const EQ_COL = 3;
 
 fn on_event(event: core.ProcessorEvent, layers: *core.LayerActivations, output_queue: *core.OutputCommandQueue) void {
     switch (event) {
-        .OnHoldEnterAfter => |_| {
+        .OnHoldEnterAfter => |data| {
             layers.set_layer_state(L_BOTH, layers.is_layer_active(L_LEFT) and layers.is_layer_active(L_RIGHT));
+            if (data.hold.custom) |kc| {
+                output_queue.tap_key(core.KeyCodeFire{ .tap_keycode = kc, .tap_modifiers = data.hold.hold_modifiers }) catch {};
+            }
         },
         .OnHoldExitAfter => |_| {
             layers.set_layer_state(L_BOTH, layers.is_layer_active(L_LEFT) and layers.is_layer_active(L_RIGHT));

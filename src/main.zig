@@ -20,37 +20,33 @@ const uart_rx_pin = gpio.num(1);
 // zig fmt: off
 pub const pin_config = rp2xxx.pins.GlobalConfiguration{
     .GPIO17 = .{ .name = "led", .direction = .out },
-    .GPIO6 = .{ .name = "col", .direction = .out },
-
-    .GPIO7 = .{ .name = "k7", .direction = .in },
-    .GPIO8 = .{ .name = "k8", .direction = .in },
-    .GPIO9 = .{ .name = "k9", .direction = .in },
-    .GPIO12 = .{ .name = "k12", .direction = .in },
-    .GPIO13 = .{ .name = "k13", .direction = .in },
-    .GPIO14 = .{ .name = "k14", .direction = .in },
-    .GPIO15 = .{ .name = "k15", .direction = .in },
-    .GPIO16 = .{ .name = "k16", .direction = .in },
-    .GPIO21 = .{ .name = "k21", .direction = .in },
-    .GPIO23 = .{ .name = "k23", .direction = .in },
-    .GPIO20 = .{ .name = "k20", .direction = .in },
-    .GPIO22 = .{ .name = "k22", .direction = .in },
-    .GPIO26 = .{ .name = "k26", .direction = .in },
-    .GPIO27 = .{ .name = "k27", .direction = .in },
-    .GPIO10 = .{ .name = "k10", .direction = .in },
+    .GPIO1 =  .{ .name = "c4", .direction = .in },
+    .GPIO6 =  .{ .name = "r7", .direction = .in },
+    .GPIO7 =  .{ .name = "r6", .direction = .in },
+    .GPIO8 =  .{ .name = "r5", .direction = .in },
+    .GPIO9 =  .{ .name = "r4", .direction = .in },
+    .GPIO21 = .{ .name = "r3", .direction = .in },
+    .GPIO23 = .{ .name = "r2", .direction = .in },
+    .GPIO20 = .{ .name = "r1", .direction = .in },
+    .GPIO22 = .{ .name = "r0", .direction = .in },
+    .GPIO26 = .{ .name = "c0", .direction = .in },
+    .GPIO27 = .{ .name = "c1", .direction = .in },
+    .GPIO28 = .{ .name = "c2", .direction = .in },
+    .GPIO29 = .{ .name = "c3", .direction = .in },
 };
 pub const p = pin_config.pins();
 pub const pin_mappings_right = [keymap.key_count]?[2]usize{
-   null, null, null, null, null,  .{0,13},.{0,12},.{0,11},.{0,10},.{0,5},
-   null, null, null, null, null,   .{0,9},.{0,8},.{0,7},.{0,6},.{0,0},
-         null, null, null, null,   .{0,4},.{0,3},.{0,2},.{0,1},
-                           null,   .{0, 14}
+         null, null, null, null, null,      .{0,4},.{1,4},.{2,4},.{3,4},.{4,4},
+   null, null, null, null, null, null,      .{0,5},.{1,5},.{2,5},.{3,5},.{4,5},.{4,7},
+         null, null, null, null, null,      .{0,6},.{1,6},.{2,6},.{3,6},.{4,6},
+                        null, null ,null, .{0, 7}, .{1,7}, .{2,7}
 };
 
 pub const pin_mappings_left = [keymap.key_count]?[2]usize{
-  .{0,5}, .{0,10},.{0,11},.{0,12},.{0,13},       null, null, null, null, null,
-  .{0,0}, .{0,6}, .{0,7}, .{0,8}, .{0,9},       null, null, null, null, null,
-          .{0,1}, .{0,2}, .{0,3}, .{0,4},      null, null, null, null,
-                                 .{0, 14},       null
+          .{0,0}, .{1,0}, .{2,0}, .{3,0}, .{4,0},        null, null, null, null, null,
+  .{0,3}, .{0,1}, .{1,1}, .{2,1}, .{3,1}, .{4,1},        null, null, null, null, null, null,
+          .{0,2}, .{1,2}, .{2,2}, .{3,2}, .{4,2},        null, null, null, null, null,
+                            .{2,3}, .{3,3}, .{4, 3},   null, null, null
 };
 
 pub const scanner_settings = zigmkay.matrix_scanning.ScannerSettings{
@@ -58,8 +54,8 @@ pub const scanner_settings = zigmkay.matrix_scanning.ScannerSettings{
 };
 
 // zig fmt: on
-pub const clacky_pin_cols = [_]rp2xxx.gpio.Pin{p.col};
-pub const clacky_pin_rows = [_]rp2xxx.gpio.Pin{ p.k7, p.k8, p.k9, p.k12, p.k13, p.k14, p.k15, p.k16, p.k21, p.k23, p.k20, p.k22, p.k26, p.k27, p.k10 };
+pub const clacky_pin_cols = [_]rp2xxx.gpio.Pin{ p.c0, p.c1, p.c2, p.c3, p.c4 };
+pub const clacky_pin_rows = [_]rp2xxx.gpio.Pin{ p.r0, p.r1, p.r2, p.r3, p.r4, p.r5, p.r6, p.r7 };
 
 const primary = true;
 
@@ -67,45 +63,21 @@ pub fn main() !void {
 
     // Init pins
     pin_config.apply(); // dont know how this could be done inside the module, but it needs to be done for things to work
-    const uart = init_uart();
-    if (primary) {
-        blink_led(1, 300);
-        zigmkay.run_primary(
-            keymap.dimensions,
-            clacky_pin_cols[0..],
-            clacky_pin_rows[0..],
-            scanner_settings,
-            keymap.combos[0..],
-            &keymap.custom_functions,
-            pin_mappings_right,
-            &keymap.keymap,
-            keymap.sides,
-            uart,
-        ) catch {
-            blink_led(100000, 50);
-        };
-    } else {
-        blink_led(5, 50);
-        zigmkay.run_secondary(
-            keymap.dimensions,
-            clacky_pin_cols[0..],
-            clacky_pin_rows[0..],
-            scanner_settings,
-            pin_mappings_left,
-            uart,
-        ) catch {
-            blink_led(100000, 50);
-        };
-    }
-}
-
-pub fn init_uart() rp2xxx.uart.UART {
-    // uart init
-    uart_tx_pin.set_function(.uart);
-    uart_rx_pin.set_function(.uart);
-    const uart = rp2xxx.uart.instance.num(0);
-    uart.apply(.{ .clock_config = rp2xxx.clock_config, .baud_rate = 9600 });
-    return uart;
+    blink_led(1, 300);
+    zigmkay.run_primary(
+        keymap.dimensions,
+        clacky_pin_cols[0..],
+        clacky_pin_rows[0..],
+        scanner_settings,
+        keymap.combos[0..],
+        &keymap.custom_functions,
+        pin_mappings_right,
+        &keymap.keymap,
+        keymap.sides,
+        null,
+    ) catch {
+        blink_led(100000, 50);
+    };
 }
 
 pub fn blink_led(blink_count: u32, interval_ms: u32) void {
