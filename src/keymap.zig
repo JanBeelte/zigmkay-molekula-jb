@@ -36,11 +36,11 @@ pub const sides = [key_count]core.Side{
 pub const SCRNSHT = _GCS(us.N4);
 
 pub const keymap = [_][key_count]core.KeyDef{
-    .{
-               T(us.Q),  AF(us.W), GUI(us.E),   T(us.R), T(us.T),                  T(us.Y),   T(us.U), GUI(us.I),   T(us.O), T(us.P),
-    T(us.TAB), T(us.A), ALT(us.S), CTL(us.D), SFT(us.F), T(us.G),                  T(us.H), SFT(us.J), CTL(us.K), ALT(us.L), T(us.SEMICOLON), T(us.QUOT),
-               T(us.Z),   T(us.X),   T(us.C),   T(us.V), T(us.B),                  T(us.N),  T(us.M), T(us.COMMA), LT(L_WIN, us.DOT), T(us.SLASH),
-                              _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
+   .{
+                 T(us.Q),   T(us.W),   T(us.F),   SFT(us.P),       T(us.B),                     T(us.J),   T(us.L),   T(us.U),    T(us.Y),   T(us.SEMICOLON),
+    T(us.TAB), SFT(us.A), CTL(us.R), ALT(us.S),   GUI(us.T), GuiH(us.G, us.T),                  T(us.M), GUI(us.N), ALT(us.E),  CTL(us.I), SFT(us.O),  T(us.QUOT),
+                 T(us.Z),   T(us.X),   T(us.C),     T(us.D),       T(us.V),                     T(us.K),   T(us.H), T(us.COMMA), LT(L_WIN, us.DOT), T(us.SLASH),
+                                           _______, LT(L_LEFT, us.SPACE), T(us.ENTER),    T(us.ENTER), LT(L_RIGHT, us.SPACE), _______
     },
     // L_ARROWS - WIP (SEMICOLON & PLUS & TILD up for debate)
     .{
